@@ -26,6 +26,18 @@
   version = "1.6.3"
 
 [[projects]]
+  name = "github.com/technoweenie/multipartstreamer"
+  packages = ["."]
+  revision = "a90a01d73ae432e2611d178c18367fbaa13e0154"
+  version = "v1.0.1"
+
+[[projects]]
+  name = "gopkg.in/telegram-bot-api.v4"
+  packages = ["."]
+  revision = "0a57807db79efce7f6719fbb2c0e0f83fda79aec"
+  version = "v4.6"
+
+[[projects]]
   branch = "v2"
   name = "gopkg.in/yaml.v2"
   packages = ["."]
@@ -34,6 +46,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "1df1963a156abedd5190f30e783c8cf7bacda52e7f819c2f0d254d3ab12a09c8"
+  inputs-digest = "4ab00855b672cefcf3d71e32dc25074ec1fb4a7326c13a84fcc9f5a7d861c62d"
   solver-name = "gps-cdcl"
   solver-version = 1
