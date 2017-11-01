@@ -2,4 +2,4 @@
 telegram bot StarCitizen
 
 ## WARNING
-run `git update-index --assume-unchanged settings.yml` before entering token. Otherwise it will be pushed when committing.
+Env var `CUTLASS_BOT_TOKEN` is required for the project to start.
