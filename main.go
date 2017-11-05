@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"net/http"
 	"os"
 
 	"gopkg.in/telegram-bot-api.v4"
@@ -18,25 +19,35 @@ func main() {
 		log.Panic(err)
 	}
 
+	go http.ListenAndServe(":"+os.Getenv("PORT"), nil)
+
 	bot.Debug = true
 
 	log.Printf("Authorized on account %s", bot.Self.UserName)
 
-	u := tgbotapi.NewUpdate(0)
-	u.Timeout = 60
+	lastID := -1
 
-	updates, err := bot.GetUpdatesChan(u)
+	for {
+		u := tgbotapi.NewUpdate(lastID + 1)
+		u.Timeout = 60
 
-	for update := range updates {
-		if update.Message == nil {
-			continue
+		updates, err := bot.GetUpdatesChan(u)
+		if err != nil {
+			log.Panic(err)
 		}
 
-		log.Printf("[%s] %s", update.Message.From.UserName, update.Message.Text)
+		for update := range updates {
+			if update.Message == nil {
+				continue
+			}
 
-		msg := tgbotapi.NewMessage(update.Message.Chat.ID, update.Message.Text)
-		msg.ReplyToMessageID = update.Message.MessageID
+			log.Printf("[%s] %s", update.Message.From.UserName, update.Message.Text)
 
-		bot.Send(msg)
+			msg := tgbotapi.NewMessage(update.Message.Chat.ID, update.Message.Text)
+			msg.ReplyToMessageID = update.Message.MessageID
+
+			bot.Send(msg)
+			lastID++
+		}
 	}
 }
