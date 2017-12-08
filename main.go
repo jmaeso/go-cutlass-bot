@@ -14,12 +14,17 @@ func main() {
 		log.Fatal("CUTLASS_BOT_TOKEN env var is required.")
 	}
 
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
 	bot, err := tgbotapi.NewBotAPI(token)
 	if err != nil {
 		log.Panic(err)
 	}
 
-	go http.ListenAndServe(":"+os.Getenv("PORT"), nil)
+	go http.ListenAndServe(":"+port, nil)
 
 	bot.Debug = true
 
